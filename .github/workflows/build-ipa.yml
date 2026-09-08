@@ -28,11 +28,8 @@ jobs:
             -configuration Release \
             -archivePath build/PocketPal.xcarchive \
             -sdk iphoneos \
-            CODE_SIGNING_ALLOWED=YES \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="-" \
-            CODE_SIGN_STYLE=Manual \
-            DEVELOPMENT_TEAM=""
+                        CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
 
       - name: Package IPA
         run: |
