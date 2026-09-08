@@ -1,0 +1,47 @@
+name: Build unsigned IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - run: corepack enable
+
+      - run: yarn install --frozen-lockfile
+
+      - run: cd ios && pod install
+
+      - name: Archive
+        run: |
+          cd ios
+          xcodebuild archive \
+            -workspace PocketPal.xcworkspace \
+            -scheme PocketPal \
+            -configuration Release \
+            -archivePath build/PocketPal.xcarchive \
+            -sdk iphoneos \
+            CODE_SIGNING_ALLOWED=YES \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM=""
+
+      - name: Package IPA
+        run: |
+          cd ios/build
+          mkdir Payload
+          cp -r PocketPal.xcarchive/Products/Applications/*.app Payload/
+          zip -r PocketPal.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PocketPal-ipa
+          path: ios/build/PocketPal.ipa
