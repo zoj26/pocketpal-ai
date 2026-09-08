@@ -233,16 +233,6 @@ export const VoicePickerView: React.FC = observer(() => {
     });
   };
 
-  useEffect(() => {
-    const sys = getEngine('system') as SystemEngine;
-    sys
-      .getVoices()
-      .then(vs => setSystemVoices(vs))
-      .catch(err => {
-        console.warn('[VoicePickerView] system voices failed:', err);
-      });
-  }, []);
-
   const voicesByEngine = useMemo(() => {
     return {
       ...VOICES_BY_ENGINE,
