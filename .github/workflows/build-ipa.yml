@@ -17,6 +17,11 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
+      - name: Create empty Env config
+        run: |
+          mkdir -p ios/Config
+          touch ios/Config/Env.xcconfig
+
       - run: cd ios && pod install
 
       - name: Archive
