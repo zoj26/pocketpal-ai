@@ -17,10 +17,21 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - name: Create empty Env config
+       - name: Create empty Env config
         run: |
           mkdir -p ios/Config
           touch ios/Config/Env.xcconfig
+
+      - name: Create placeholder GoogleService-Info.plist
+        run: |
+          cat > ios/GoogleService-Info.plist << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+          </dict>
+          </plist>
+          EOF
 
       - run: cd ios && pod install
 
