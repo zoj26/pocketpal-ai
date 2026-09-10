@@ -44,8 +44,8 @@ jobs:
           APP_URL=pocketpal://app
 
           # Feature Flags (true/false)
-          ENABLE_PALSHUB_INTEGRATION=true
-          ENABLE_AUTHENTICATION=true
+          ENABLE_PALSHUB_INTEGRATION=false
+          ENABLE_AUTHENTICATION=false
           ENABLE_OFFLINE_MODE=true
 
           # Google Sign-In Configuration
