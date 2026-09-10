@@ -17,7 +17,7 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-       - name: Create empty Env config
+      - name: Create empty Env config
         run: |
           mkdir -p ios/Config
           touch ios/Config/Env.xcconfig
@@ -44,7 +44,7 @@ jobs:
             -configuration Release \
             -archivePath build/PocketPal.xcarchive \
             -sdk iphoneos \
-                        CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO
 
       - name: Package IPA
