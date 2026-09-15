@@ -206,7 +206,7 @@ export const VoicePickerView: React.FC = observer(() => {
   const l10n = useContext(L10nContext);
   const styles = createStyles(theme);
 
-  const [systemVoices, setSystemVoices] = useState<Voice[]>([]);
+  const [systemVoices] = useState<Voice[]>([]);
   const [expanded, setExpanded] = useState<Set<EngineId>>(() => {
     const active = ttsStore.currentVoice?.engine;
     return new Set(active ? [active] : []);
