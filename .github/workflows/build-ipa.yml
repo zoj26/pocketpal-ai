@@ -6,8 +6,9 @@ on:
 jobs:
   build:
     runs-on: macos-15
-    env:
+        env:
       NODE_OPTIONS: --max-old-space-size=8192
+      E2E_BUILD: 'true'
     steps:
       - uses: actions/checkout@v4
 
