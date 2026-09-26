@@ -109,26 +109,13 @@ jobs:
             STRIP_INSTALLED_PRODUCT=NO \
             DEAD_CODE_STRIPPING=NO
 
-      - name: Diagnose ImageLoader linkage
+      - name: Print RCTAppDependencyProvider source
         run: |
-          BINARY="ios/build/PocketPal.xcarchive/Products/Applications/PocketPal.app/PocketPal"
-          echo "=== Binary exists? ==="
-          ls -la "$BINARY" || echo "BINARY NOT FOUND AT EXPECTED PATH"
+          echo "=== ios/build/generated/ios/RCTAppDependencyProvider.h ==="
+          cat ios/build/generated/ios/RCTAppDependencyProvider.h 2>/dev/null || echo "FILE NOT FOUND"
           echo ""
-          echo "=== Searching binary for ImageLoader-related symbols/strings ==="
-          strings "$BINARY" | grep -i "ImageLoader" || echo "NO 'ImageLoader' STRINGS FOUND IN BINARY AT ALL"
-          echo ""
-          echo "=== Searching for RCTImageLoader class symbol specifically ==="
-          nm "$BINARY" 2>/dev/null | grep -i "RCTImageLoader" || echo "NO RCTImageLoader SYMBOL FOUND"
-
-      - name: Inspect generated module provider list
-        run: |
-          echo "=== Searching all generated codegen files for ImageLoader ==="
-          find ios/build -iname "*ModuleProvider*" -o -iname "*DependencyProvider*" 2>/dev/null
-          echo ""
-          echo "=== Contents of any RCTModuleProviders file, filtered for ImageLoader ==="
-          find ios -iname "RCTModuleProviders*" -exec grep -H -i "ImageLoader" {} \; 2>/dev/null
-          find ios -iname "RCTModuleProviders*" -exec echo "--- full file: {} ---" \; -exec cat {} \; 2>/dev/null
+          echo "=== ios/build/generated/ios/RCTAppDependencyProvider.mm ==="
+          cat ios/build/generated/ios/RCTAppDependencyProvider.mm 2>/dev/null || echo "FILE NOT FOUND"
 
       - name: Package IPA
         run: |
