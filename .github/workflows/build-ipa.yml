@@ -109,6 +109,18 @@ jobs:
             STRIP_INSTALLED_PRODUCT=NO \
             DEAD_CODE_STRIPPING=NO
 
+      - name: Diagnose ImageLoader linkage
+        run: |
+          BINARY="ios/build/PocketPal.xcarchive/Products/Applications/PocketPal.app/PocketPal"
+          echo "=== Binary exists? ==="
+          ls -la "$BINARY" || echo "BINARY NOT FOUND AT EXPECTED PATH"
+          echo ""
+          echo "=== Searching binary for ImageLoader-related symbols/strings ==="
+          strings "$BINARY" | grep -i "ImageLoader" || echo "NO 'ImageLoader' STRINGS FOUND IN BINARY AT ALL"
+          echo ""
+          echo "=== Searching for RCTImageLoader class symbol specifically ==="
+          nm "$BINARY" 2>/dev/null | grep -i "RCTImageLoader" || echo "NO RCTImageLoader SYMBOL FOUND"
+
       - name: Package IPA
         run: |
           cd ios/build
