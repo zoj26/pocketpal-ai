@@ -31,6 +31,11 @@ target 'PocketPal' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # Explicitly force React-RCTImage in — RCTImageLoader has a documented
+  # history of silently dropping out under use_frameworks! when no other
+  # pod's spec pulls it in strongly enough.
+  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
+
   # # Required for Firebase with New Architecture
   # pod 'Firebase',         :modular_headers => true
   # pod 'FirebaseCore',     :modular_headers => true
