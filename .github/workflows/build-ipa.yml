@@ -104,7 +104,10 @@ jobs:
             -archivePath build/PocketPal.xcarchive \
             -sdk iphoneos \
             CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO
+            CODE_SIGNING_REQUIRED=NO \
+            COPY_PHASE_STRIP=NO \
+            STRIP_INSTALLED_PRODUCT=NO \
+            DEAD_CODE_STRIPPING=NO
 
       - name: Package IPA
         run: |
