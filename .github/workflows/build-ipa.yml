@@ -109,13 +109,25 @@ jobs:
             STRIP_INSTALLED_PRODUCT=NO \
             DEAD_CODE_STRIPPING=NO
 
-      - name: Print RCTAppDependencyProvider source
+      - name: Install ldid
         run: |
-          echo "=== ios/build/generated/ios/RCTAppDependencyProvider.h ==="
-          cat ios/build/generated/ios/RCTAppDependencyProvider.h 2>/dev/null || echo "FILE NOT FOUND"
-          echo ""
-          echo "=== ios/build/generated/ios/RCTAppDependencyProvider.mm ==="
-          cat ios/build/generated/ios/RCTAppDependencyProvider.mm 2>/dev/null || echo "FILE NOT FOUND"
+          brew install ldid
+
+      - name: Apply increased memory entitlements
+        run: |
+          cat > entitlements.plist << 'EOL'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>com.apple.developer.kernel.increased-memory-limit</key>
+              <true/>
+              <key>com.apple.developer.kernel.extended-virtual-addressing</key>
+              <true/>
+          </dict>
+          </plist>
+          EOL
+          ldid -Sentitlements.plist ios/build/PocketPal.xcarchive/Products/Applications/PocketPal.app/PocketPal
 
       - name: Package IPA
         run: |
